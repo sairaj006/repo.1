@@ -1,0 +1,65 @@
+
+Feature: cross browser
+
+  Scenario: open required browser
+    Given open "firefox" browser
+    When launch site like "http://www.gmail.com"
+    And enter userid like "maruthi06chary@gmail.com"
+    And click on next button
+    And enter password like "Selenium@1234"
+    And click on login button
+
+
+package mypack;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Myclass 
+{
+	
+	RemoteWebDriver driver;
+	@Given("open {string} browser")
+	public void method1(String bn)
+	{
+		if(bn.equalsIgnoreCase("firefox"))
+		{                   
+			WebDriverManager.firefoxdriver().setup();
+			driver=new FirefoxDriver();  
+		}
+	}
+	@When("launch site like {string}")
+	public void method2(String x)
+	{
+		driver.get(x);	
+	}
+	@And("enter userid like {string}")
+	public void method3(String y)
+	{
+		driver.findElement(By.name("identifier")).sendKeys(y);
+	}
+	@And("click on next button")
+	public void method4()
+	{
+		driver.findElement(By.xpath("//span[text()='Next']")).click();
+	}
+	@And("enter password like {string}")
+	public void method4(String y)
+	{
+		driver.findElement(By.name("password")).sendKeys(y);
+	}
+	
+	@And("click on login button")
+	public void method5()
+	{
+		driver.findElement(By.name("login")).click();
+	}
+	
+	
+	
+}

@@ -1,0 +1,95 @@
+Feature: cross browser
+
+  Scenario: open required browser
+    Given open "opera" browser
+    When launch site like "http://www.facebook.com"
+    And enter userid like "qualizeal@hyderabad.com"
+    And enter password like "password@123"
+    And click on login button
+    
+    package mypack;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import io.cucumber.java.ParameterType;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Myclass1 
+{
+	//declare driver object to parent class
+	RemoteWebDriver driver;
+	
+	@Given("open {string} browser")
+	public void method1(String bn)
+	{
+		if(bn.equalsIgnoreCase("chrome"))
+		{                   
+			WebDriverManager.chromedriver().setup();
+			driver=new ChromeDriver();  //define object
+		}
+		else if(bn.equalsIgnoreCase("edge"))
+		{
+			WebDriverManager.edgedriver().setup();
+			driver=new EdgeDriver();     
+		}
+		else if(bn.equalsIgnoreCase("firefox"))
+		{
+			WebDriverManager.firefoxdriver().setup();
+			driver=new FirefoxDriver(); 
+		}
+		else if(bn.equalsIgnoreCase("opera"))
+		{
+			WebDriverManager.operadriver().setup();
+			driver=new OperaDriver(); 
+		}
+		else if(bn.equalsIgnoreCase("ie"))
+		{
+			WebDriverManager.iedriver().setup();
+			driver=new InternetExplorerDriver(); 	
+		}
+		else
+		{
+			System.out.println("Wrong browser");
+			System.exit(0); //stop execution forcibly
+		}	
+	}
+	
+	@When("launch site like {string}")
+	public void method2(String x)
+	{
+		driver.get(x);	
+	}
+	
+	
+	@ParameterType(name="email",value="\"[.]{1,64}[@][a-zA-Z0-9-\\.]{1,253}[\\.][a-zA-Z]{2,3}([\\.][a-zA-Z]{2}){0,1}\"")
+	public String method(String x)
+	{
+		return(x);
+	}
+	
+	@When("enter userid like {string}")
+	public void method3(String y)
+	{
+		driver.findElement(By.name("email")).sendKeys(y);
+	}
+	
+	@When("enter password like {string}")
+	public void method4(String y)
+	{
+		driver.findElement(By.name("pass")).sendKeys(y);
+	}
+	
+	@When("click on login button")
+	public void method5()
+	{
+		driver.findElement(By.name("login")).click();
+	}
+ }	

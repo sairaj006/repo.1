@@ -1,0 +1,53 @@
+package mypack;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+import org.openqa.selenium.support.ui.FluentWait;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Flipkart
+{
+	public static void main(String[] args)
+	{
+		//open browser
+		WebDriverManager.chromedriver().setup();
+		RemoteWebDriver driver=new ChromeDriver();
+		//define wait
+		FluentWait<RemoteWebDriver> wait=new FluentWait<RemoteWebDriver>(driver);
+		wait.withTimeout(Duration.ofSeconds(30));
+		wait.pollingEvery(Duration.ofMillis(10));
+		//launch site
+		driver.get("http://www.flipkart.com");
+		driver.manage().window().maximize();
+		wait.until(elementToBeClickable(By.xpath("//button[text()='✕']"))).click();
+		wait.until(elementToBeClickable(By.xpath("//a[text()='Login']"))).click();
+		wait.until(visibilityOfElementLocated(By.xpath("(//input[@type='text'])[2]"))).sendKeys("8639039875");
+		wait.until(visibilityOfElementLocated(By.xpath("//input[@type='password']"))).sendKeys("Maruthisairaj");
+		wait.until(elementToBeClickable(By.xpath("(//span[text()='Login'])[2]"))).click();
+		wait.until(elementToBeClickable(By.xpath("//div[text()='Mobiles']"))).click();
+		Actions act =new Actions(driver);
+		WebElement e= wait.until(visibilityOfElementLocated(By.xpath("//span[text()='Electronics']")));
+		act.moveToElement(e).perform();
+		wait.until(elementToBeClickable(By.xpath("//a[text()='Asus']"))).click();
+		wait.until(elementToBeClickable(By.xpath("//div[text()='ASUS ROG 5s (Phantom Black, 256 GB)']"))).click();
+		Set<String> s=driver.getWindowHandles();
+        	ArrayList<String> a=new ArrayList<String>(s);
+        	driver.switchTo().window(a.get(1));
+		wait.until(elementToBeClickable(By.xpath("//button[text()='GO TO CART']"))).click();
+		
+
+		
+		
+	}
+
+}

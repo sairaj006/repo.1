@@ -1,0 +1,58 @@
+Feature: cross browser
+
+  Scenario: open required browser
+    Given open "opera" browser
+    When launch site like "http://www.facebook.com"
+    And enter userid like "geyduhatru@vusra.com"
+    And enter password like "Selenium@1234"
+    And click on login button
+
+
+package mypack;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Myclass 
+{
+	
+	RemoteWebDriver driver;
+	@Given("open {string} browser")
+	public void method1(String bn)
+	{
+		if(bn.equalsIgnoreCase("opera"))
+		{                   
+			WebDriverManager.operadriver().setup();
+			driver=new OperaDriver();  
+		}
+	}
+	@When("launch site like {string}")
+	public void method2(String x)
+	{
+		driver.get(x);	
+	}
+	@And("enter userid like {string}")
+	public void method3(String y)
+	{
+		driver.findElement(By.name("email")).sendKeys(y);
+	}
+	@And("enter password like {string}")
+	public void method4(String y)
+	{
+		driver.findElement(By.name("pass")).sendKeys(y);
+	}
+	
+	@And("click on login button")
+	public void method5()
+	{
+		driver.findElement(By.name("login")).click();
+	}
+	
+	
+	
+}

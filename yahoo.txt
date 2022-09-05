@@ -1,0 +1,152 @@
+Feature: cross browser
+
+  Scenario: open required browser
+    Given open "chrome" browsers
+    When launch site like "https://login.yahoo.com/?.src=ym&pspid=1197806870&activity=header-signin&.lang=en-US&.intl=us&.done=https%3A%2F%2Fmail.yahoo.com%2Fd"
+    And enter userid like "selenium.practice@yahoo.com"
+    And click on next button
+    And enter password like "War@1234"
+    And click on next  button
+    And click on compose button
+    And enter to like "maruthi06chary@gmail.com"
+    And enter subject like "automatic generated mail"
+    And enter body like "hi"
+    And click on send button
+
+
+
+package mypack;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+
+public class Myclass 
+{
+	RemoteWebDriver driver;
+	
+	@Given("open {string} browsers")
+	public void method1(String bn)
+	{
+		if(bn.equalsIgnoreCase("chrome"))
+		{                   
+			WebDriverManager.chromedriver().setup();
+			driver=new ChromeDriver();  //define object
+		}
+		else if(bn.equalsIgnoreCase("edge"))
+		{
+			WebDriverManager.edgedriver().setup();
+			driver=new EdgeDriver();     
+		}
+		else if(bn.equalsIgnoreCase("firefox"))
+		{
+			WebDriverManager.firefoxdriver().setup();
+			driver=new FirefoxDriver(); 
+		}
+		else if(bn.equalsIgnoreCase("opera"))
+		{
+			WebDriverManager.operadriver().setup();
+			driver=new OperaDriver(); 
+		}
+		else if(bn.equalsIgnoreCase("ie"))
+		{
+			WebDriverManager.iedriver().setup();
+			driver=new InternetExplorerDriver(); 	
+		}
+		else
+		{
+			System.out.println("Wrong browser");
+			System.exit(0); //stop execution forcibly
+		}	
+	}
+	
+	@When("launch site like {string}")
+	public void method2(String x)
+	{
+		driver.get(x);	
+	}
+	
+	
+	
+	
+	
+	@When("enter userid like {string}")
+	public void method3(String y)
+	{
+		driver.findElement(By.name("username")).sendKeys(y);
+		
+	}
+	@When("click on next button")
+	public void method4()throws Exception
+	{
+		driver.findElement(By.name("signin")).click();
+		Thread.sleep(5000);
+	}
+	
+	@When("enter password like {string}")
+	public void method5(String y)
+	{
+		driver.findElement(By.name("password")).sendKeys(y);;
+	}
+	@When("click on next  button")
+	public void method6()throws Exception
+	{
+		driver.findElement(By.name("verifyPassword")).click();
+		Thread.sleep(5000);
+	
+	}
+	@When("click on compose button")
+	public void method7()throws Exception
+	{
+		driver.findElement(By.xpath("//*[@data-test-id='compose-button']")).click();
+		Thread.sleep(5000);
+	}
+	@When("enter to like {string}")
+	public void enter_to_like(String z)throws Exception
+	{
+	driver.findElement(By.id("message-to-field")).sendKeys(z);
+	Thread.sleep(5000);
+	
+	    
+ }
+	@When("enter subject like {string}")
+	public void method8(String z)throws Exception
+	{
+	driver.findElement(By.xpath("//*[@class='q_T y_Z2hYGcu je_0 jb_0 X_0 N_fq7 G_e A_6EqO C_Z281SGl ir_0 P_0 bj3_Z281SGl b_0 j_n d_72FG em_N']")).sendKeys(z);
+	Thread.sleep(5000);
+	
+	    
+ }
+	@When("enter body like {string}")
+	public void method9(String z)throws Exception
+	{
+	driver.findElement(By.xpath("//*[@class='rte em_N ir_0 iy_A iz_h N_6Fd5']")).sendKeys(z);
+	Thread.sleep(5000);
+	}
+	@When("click on send button")
+	public void method10()throws Exception
+	{
+		driver.findElement(By.xpath("//*[@data-test-id='compose-send-button']")).click();
+		Thread.sleep(5000);
+	}
+	    
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	}
+

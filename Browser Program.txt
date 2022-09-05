@@ -1,0 +1,54 @@
+Feature: wikipedia
+
+  Scenario: open facebook site
+    Given open "firefox" browser
+
+
+package mypack;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Myclass1 
+   {
+	RemoteWebDriver driver;
+	@Given("open {string} browser")
+	public void method1(String bn)
+	{
+		if(bn.equalsIgnoreCase("chrome"))
+		{                   
+		WebDriverManager.chromedriver().setup();
+		driver=new ChromeDriver();     
+	}
+	else if(bn.equalsIgnoreCase("edge"))
+	{
+	WebDriverManager.edgedriver().setup();
+	driver=new EdgeDriver();     
+	}
+	else if(bn.equalsIgnoreCase("firefox"))
+	{
+		WebDriverManager.firefoxdriver().setup();
+		driver=new FirefoxDriver(); 
+	}
+	else if(bn.equalsIgnoreCase("opera"))
+	{
+		WebDriverManager.operadriver().setup();
+		driver=new OperaDriver(); 
+	}
+	else
+	{
+		WebDriverManager.iedriver().setup();
+		driver=new InternetExplorerDriver(); 	
+	}
+
+}
+   }

@@ -1,0 +1,44 @@
+RemoteWebDriver driver;
+   @Given("open {string} browser")
+    public void method1(String bn)
+  {
+	 if(bn.equalsIgnoreCase("chrome"))
+	 {
+		 WebDriverManager.chromedriver().setup();
+		 driver=new ChromeDriver();
+	 }
+	 else if(bn.equalsIgnoreCase("firefox"))
+	 {
+		 WebDriverManager.firefoxdriver().setup();
+		 driver=new FirefoxDriver();
+	 }
+	 else if(bn.equalsIgnoreCase("opera"))
+	 {
+		 WebDriverManager.operadriver().setup();
+		 driver=new OperaDriver(); 
+	 }
+	 else if(bn.equalsIgnoreCase("edge"))
+	 {
+		 WebDriverManager.edgedriver().setup();
+		 driver=new EdgeDriver();
+	 }
+	 else
+	 {
+		 WebDriverManager.iedriver().setup();
+		 driver=new InternetExplorerDriver(); 
+	 }
+		 
+	  
+	  
+	  
+  }
+  
+  
+
+}
+Feature: browsers
+Scenario: open chrome browser
+Given open "chrome" browser
+  Given open "firefox" browser
+  Given open "opera" browser
+  Given open "edge" browser
